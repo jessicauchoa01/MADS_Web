@@ -2,13 +2,15 @@
 
 namespace GoEat;
 
-class Estado
+class Estado extends Model
 {
     protected ?int $id;
     protected ?string $estado;
 
     public function __construct(string $estado = '')
     {
+
+        parent::__construct('estados', 'id');
 
         $this->id = null;
         $this->estado = $estado;

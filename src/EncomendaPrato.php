@@ -2,7 +2,7 @@
 
 namespace GoEat;
 
-class EncomendaPrato
+class EncomendaPrato extends Model implements Mailable
 {
     protected ?int $id;
     protected ?int $encomenda;
@@ -13,6 +13,7 @@ class EncomendaPrato
     
     public function __construct(int $encomenda = 0, int $prato = 0, int $quantidade = 0, int $situacao = 0)
     {
+        parent::__construct('encomenda_prato', 'id');
 
         $this->id = null;
         $this->encomenda = $encomenda;

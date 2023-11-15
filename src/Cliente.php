@@ -20,8 +20,15 @@ class Cliente extends Entidade
             $nif,
             $telemovel,
             $morada,
-            $estado
+            $estado,
+            $tableName = 'clientes',
+            $primaryKey = 'id',
+            $excludedProperties = ['encomendas']
         );
+
+        $this->tableName = 'clientes';
+        $this->primaryKey = 'id';
+        $this->excludedProperties = ['encomendas'];
 
         $this->encomendas = $encomendas;
     }
