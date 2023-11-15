@@ -2,7 +2,7 @@
 
 namespace GoEat;
 
-class Encomenda extends Model
+class Encomenda
 {
     protected ?int $id;
     protected string $data;
@@ -12,7 +12,6 @@ class Encomenda extends Model
     
     public function __construct(string $data = '', int $cliente = 0, float $total = 0)
     {
-        parent::__construct('encomendas', 'id', ['lista']);
 
         $this->id = null;
         $this->data = $data;

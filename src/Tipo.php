@@ -2,14 +2,13 @@
 
 namespace GoEat;
 
-class Tipo extends Model
+class Tipo
 {
     protected ?int $id;
     protected ?string $tipo;
     
     public function __construct(string $tipo ='')
     {
-        parent::__construct('tipos', 'id');
         
         $this->id = null;
         $this->tipo = $tipo;

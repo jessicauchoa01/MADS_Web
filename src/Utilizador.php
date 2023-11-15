@@ -2,9 +2,7 @@
 
 namespace GoEat;
 
-use GoEat\Perfil;
-
-class Utilizador extends Model
+class Utilizador
 {
     protected ?int $id;
     protected string $nome;
@@ -16,9 +14,6 @@ class Utilizador extends Model
 
     public function __construct(string $nome = '', string $email = '', string $password = '', int $perfil = 0, int $ativo = 0, int $entidade = 0)
     {
-
-        parent::__construct('utilizadores', 'id');
-
         $this->id = null;
         $this->nome = $nome;
         $this->email = $email;

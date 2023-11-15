@@ -1,7 +1,7 @@
 <?php
 
 namespace GoEat;
-class Morada extends Model
+class Morada
 {
     protected ?int $id;
     protected string $rua;
@@ -18,7 +18,6 @@ class Morada extends Model
         string $pais = ''
     )
     {
-        parent::__construct('moradas', 'id');
 
         $this->id = null;
         $this->rua = $rua;

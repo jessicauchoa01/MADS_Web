@@ -3,7 +3,7 @@
 namespace GoEat;
 
 use Carbon\Carbon;
-class Restaurante extends Entidade
+class Restaurante
 {
     protected string $telefone;
     protected string $designacao;
@@ -53,8 +53,6 @@ class Restaurante extends Entidade
         int $numerario = 0
     ){
 
-        parent::__construct($nome, $nif, $telemovel, $morada, $estado, $tableName = 'restaurantes', $primaryKey = 'id', $excludedProperties = []);
-
         $this->telefone = $telefone;
         $this->designacao = $designacao;
         $this->abertura = $abertura;
@@ -62,9 +60,6 @@ class Restaurante extends Entidade
         $this->url = $url;
         $this->responsavel = $responsavel;
         $this->contactoResponsavel = $contactoResponsavel;
-        $this->tableName = 'restaurantes';
-        $this->primaryKey = 'id';
-        $this->excludedProperties = [];
         $this->segunda = $segunda;
         $this->terca = $terca;
         $this->quarta = $quarta;

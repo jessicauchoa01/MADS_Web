@@ -2,7 +2,7 @@
 
 namespace GoEat;
 
-class Prato extends Model
+class Prato
 {
     protected ?int $id;
     protected string $nome;
@@ -23,7 +23,6 @@ class Prato extends Model
         int $restaurante = 0
     )
     {
-        parent::__construct('pratos', 'id');
 
         $this->id = null;
         $this->nome = $nome;

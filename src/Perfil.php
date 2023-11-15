@@ -2,14 +2,13 @@
 
 namespace GoEat;
 
-class Perfil extends Model
+class Perfil
 {
     protected ?int $id;
     protected ?string $perfil;
 
     public function __construct(string $perfil = ''){
 
-        parent::__construct('perfis', 'id');
 
         $this->id = null;
         $this->perfil = $perfil;

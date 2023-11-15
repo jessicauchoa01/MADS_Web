@@ -2,7 +2,7 @@
 
 namespace GoEat;
 
-abstract class Entidade extends Model
+abstract class Entidade
 {
     protected ?int $id;
     protected string $nome;
@@ -16,13 +16,9 @@ abstract class Entidade extends Model
         string $nif = '',
         string $telemovel = '',
         int $morada = 0,
-        int $estado = 0,
-        $tableName,
-        $primaryKey,
-        $excludedProperties
+        int $estado = 0
     )
     {
-        parent::__construct($tableName, $primaryKey, $excludedProperties);
 
         $this->id = null;
         $this->nome = $nome;
