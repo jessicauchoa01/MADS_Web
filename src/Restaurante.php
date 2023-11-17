@@ -2,7 +2,6 @@
 
 namespace GoEat;
 
-use Carbon\Carbon;
 class Restaurante extends Entidade
 {
     protected string $telefone;

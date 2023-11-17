@@ -1,6 +1,7 @@
 <?php
 
 namespace GoEat;
+
 class Morada extends Model
 {
     protected ?int $id;

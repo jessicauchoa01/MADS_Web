@@ -2,8 +2,6 @@
 
 namespace GoEat;
 
-use GoEat\Perfil;
-
 class Utilizador extends Model
 {
     protected ?int $id;
