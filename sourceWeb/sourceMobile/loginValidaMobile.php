@@ -13,10 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
 
-
 require '../../vendor/autoload.php';
-
-use GoEat\Utilizador;
 
 // Habilita o CORS para permitir solicitações entre diferentes domínios
 header("Access-Control-Allow-Origin: *");
@@ -31,20 +28,13 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // Inicia a sessão
 session_start();
 
-// Verifica se já está autenticado
-if (isset($_SESSION['perfil'])){
-    echo json_encode(["message" => "Já autenticado"]);
-    http_response_code(200);
-    exit;
-}
-
 // Verifica se o método da solicitação é POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Obtém os dados do corpo da solicitação
     $data = json_decode(file_get_contents("php://input"));
 
     // Verifica se os campos necessários estão presentes
-    if (!isset($data->email) || !isset($data->password)) {
+    if (empty($data->email) || empty($data->password)) {
         echo json_encode(["message" => "Campos obrigatórios ausentes"]);
         http_response_code(400);
         exit;
