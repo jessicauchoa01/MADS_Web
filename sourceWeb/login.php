@@ -15,7 +15,7 @@
         <p class='alert alert-danger'><?php echo urldecode($_GET['erro']); ?> </p>
       <?php } ?>
       
-      <form method="post" action="loginValida.php">
+      <form method="post" action="loginValidaWeb.php">
 
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Utilizador</label>

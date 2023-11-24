@@ -6,15 +6,12 @@ include 'includes/top.php';
 
 require '../vendor/autoload.php';
 
-use GoEat\Prato;
-use GoEat\Restaurante;
-use GoEat\Tipo;
-
 $today = date('l');
 
 $restaurantes = Restaurante::search([['coluna' => 'estado', 'operador' => '=' ,'valor' => 1]]);
 
 $tipos = Tipo::search();
+
 ?>
 <div class="container mt-4">
 
@@ -24,8 +21,8 @@ $tipos = Tipo::search();
 
 <div class="row">
     <?php foreach ($tipos as $tipo) {?>
-        <div class="col mb-5 mt-5">
-            <a href="pratos.php?id=<?php echo $tipo->getId();?>"  style="display: block;">
+        <div class="col mb-5 mt-3">
+            <a href="pratos.php?id=<?php echo $tipo->getId();?>"  style="display: block; text-decoration: none">
                 <div class="card d-flex align-items-center ">
                     <div style= "padding-top: 2rem;">
                         <?php switch ($tipo->getId()) {
@@ -53,7 +50,7 @@ $tipos = Tipo::search();
                         }?>
                     </div>
                     <div class="card-body">
-                        <h4 class="card-title"><?php echo $tipo->getTipo();?></h4>    
+                        <h4 class="card-title"><?php echo $tipo->getTipo();?></h4>
                     </div>
                 </div>    
             </a>
@@ -61,7 +58,7 @@ $tipos = Tipo::search();
     <?php } ?>
 </div>
 
-<?php function pratos($pratos){?>
+<?php function pratos($pratos) {?>
     <div class="row mb-5">
         <?php foreach ($pratos as $prato) {
             if($prato->getDisponivel() == 1) {?>
@@ -85,21 +82,26 @@ $tipos = Tipo::search();
     </div>
 <?php } ?>
 
-    <?php 
+    <?php
     foreach($restaurantes as $restaurante){
-        if ($restaurante->getOpen($today) == 1){
-            if(isset($_GET['id'])){
-                $pratos = Prato::search([['coluna' => 'tipo', 'operador' => '=' ,'valor' => $_GET['id']],['coluna' => 'restaurante', 'operador' => '=' ,'valor' => $restaurante->getId()]]);
-                pratos($pratos);
-            }else{
-                $pratos = Prato::search([['coluna' => 'restaurante', 'operador' => '=' ,'valor' => $restaurante->getId()]]);?>
-                <div class="d-flex align-items-center gap-4 mb-2">
-                    <i class="fa-solid fa-utensils fa-2xl"></i>
-                    <h2><?php echo $restaurante->getNome();?></h2>
-                </div>
-                <?php pratos($pratos);
+        if (!empty($restaurante->getEmenta())) {
+            if ($restaurante->getOpen($today) == 1){
+
+                if(isset($_GET['id'])){
+                    $pratos = Prato::search([['coluna' => 'tipo', 'operador' => '=' ,'valor' => $_GET['id']],['coluna' => 'restaurante', 'operador' => '=' ,'valor' => $restaurante->getId()]]);
+                    pratos($pratos);
+                }else{
+                    $pratos = Prato::search([['coluna' => 'restaurante', 'operador' => '=' ,'valor' => $restaurante->getId()]]);?>
+                    <div class="d-flex align-items-center gap-4 mb-4">
+                        <i class="fa-solid fa-utensils fa-2xl"></i>
+                        <h2><?php echo $restaurante->getNome();?></h2>
+                    </div>
+                    <?php pratos($pratos); ?>
+                    <?php
+                }
             }
         }
+
     }
     ?>
 

@@ -4,11 +4,7 @@ namespace GoEat;
 
 require '../vendor/autoload.php';
 
-session_start(); 
-
-use GoEat\Utilizador;
-use GoEat\Cliente;
-use GoEat\Morada;
+session_start();
 
  if (empty($_POST['nome']) ||
     empty($_POST['nif']) ||
@@ -26,7 +22,7 @@ use GoEat\Morada;
     exit;
 }  else {
     if (strlen($_POST['telemovel']) < 9 || strlen($_POST['telemovel']) > 9) {
-        $mensagem = urlencode('A palavra-passe tem de ter no mínimo 8 caracteres.');
+        $mensagem = urlencode('Número de telemóvel inválido.');
         header('Location: registoCliForm.php?erro=' . $mensagem);
         exit;
     }

@@ -21,7 +21,7 @@ $tipos = Tipo::search();
         <div class="row">
             <?php foreach ($tipos as $tipo) {?>
                 <div class="col mb-5">
-                    <a href="pratos.php?id=<?php echo $tipo->getId();?>"  style="display: block;">
+                    <a href="pratos.php?id=<?php echo $tipo->getId();?>"  style="display: block; text-decoration: none">
                         <div class="card d-flex align-items-center ">
                             <div style= "padding-top: 2rem;">
                                 <?php switch ($tipo->getId()) {

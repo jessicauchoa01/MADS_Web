@@ -2,7 +2,7 @@
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center align-items-center mb-md-0">
-            <li><a href="index.php" style="background-color: #ffc107; padding:10px; border-radius: 50%;"><img src="assets/img/icon.png" width= 25px height = 25px alt=""></a></li>
+            <li><a href="index.php" style="background-color: #ffc107; padding:10px; border-radius: 50%; margin-right: 0.5rem"><img src="assets/img/icon.png" width= 25px height = 25px alt=""></a></li>
             <?php if (isset($_SESSION['perfil'])){
               if ($_SESSION['perfil'] == 'Administrador'){?>
                 <li><a href="utilizadores.php" class="nav-link px-2 text-white">Utilizadores</a></li>
@@ -31,11 +31,14 @@
             <a href="login.php"><button type="button"  class="btn btn-warning">Login</button></a>
             
           <?php } else { ?>
-            <a href="loginTermina.php"><button type="button"  class="btn btn-warning">LogOut</button></a>
             <?php if ($_SESSION['perfil'] == 'Cliente'){?>
-              <a href="carrinho.php" style="background-color: #ffc107; padding:10px; border-radius: 50%;"><img src="assets/img/cart.png" width= 25px height = 25px alt=""></a>
-          <?php }} ?>
-            
+              <div class="d-flex align-items-center">
+                  <a href="carrinho.php" style="background-color: #ffc107; padding:6px; border-radius: 25%;"><img src="assets/img/cart.png" width= 25px height = 25px alt=""></a>
+            <?php } ?>
+            <a href="loginTermina.php" style="margin-left: 0.5rem" ><button type="button"  class="btn btn-warning">LogOut</button></a>
+              </div>
+          <?php } ?>
+
         </div>
       </div>
     </div>

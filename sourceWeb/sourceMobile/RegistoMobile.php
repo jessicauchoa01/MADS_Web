@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $utilizador = new Utilizador($data->nome, $data->email, password_hash($data->password, PASSWORD_DEFAULT), 2, 1, $cliente->getId());
     $utilizador->save();
 
-    echo json_encode(["message" => "Autenticação bem-sucedida"]);
+    echo json_encode(["message" => "Registo bem-sucedido"]);
     http_response_code(200);
     exit;
 } else {

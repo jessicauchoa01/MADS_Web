@@ -25,14 +25,14 @@ if (!empty($encomenda)) {
         <div class="row">
             <div class="col">
                 <?php if (empty($encomenda)) { ?>
-                    <h2 style="text-align: center; margin-top: 2rem; margin-bottom: 4rem">Ainda não efetuou encomendas</h2>
-                    <?php
+                    <h2 style="text-align: center; margin-top: 2rem; margin-bottom: 4rem">Ainda não efetuou nenhuma encomenda</h2>
+                <?php
 
                     include 'includes/footer.php';
 
                     exit;
 
-                }
+                    }
 
                 ?>
                 <h2>Última Encomenda:</h2>
@@ -88,6 +88,6 @@ if (!empty($encomenda)) {
             </div>
         </div>
     </div>
-    <?php
+<?php
 
 include 'includes/footer.php';
