@@ -1,7 +1,9 @@
 <?php
 namespace GoEat;
 
-header("Access-Control-Allow-Origin: no-cors");
+require '../../vendor/autoload.php';
+
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
@@ -12,8 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
     exit;
 }
-
-require '../../vendor/autoload.php';
 
 // Habilita o CORS para permitir solicitações entre diferentes domínios
 header("Access-Control-Allow-Origin: *");
@@ -26,7 +26,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Inicia a sessão
-session_start();
+session_start(); //SERVE PARA ALGO???
 
 // Verifica se o método da solicitação é POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Verifica se há exatamente um utilizador com o e-mail fornecido
     if (count($resultados) != 0) {
-        echo json_encode(["message" => "Já existe um utilizador com este e-mail"]);
+        echo json_encode(["message" => "Já existe um utilizador com este e-mail."]);
         http_response_code(401);
         exit;
     }

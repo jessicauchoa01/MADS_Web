@@ -1,6 +1,8 @@
 <?php
 namespace GoEat;
 
+require '../../vendor/autoload.php';
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -12,8 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
     exit;
 }
-
-require '../../vendor/autoload.php';
 
 // Habilita o CORS para permitir solicitações entre diferentes domínios
 header("Access-Control-Allow-Origin: *");
@@ -55,11 +55,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Verifica se o utilizador está ativo
     if ($utilizador->getAtivo() == 1) {
         // Verifica a correspondência da senha
+        // Verifica a correspondência da senha
         if (password_verify($data->password, $utilizador->getPassword())) {
-            $_SESSION['perfil'] = $utilizador->getPerfil();
-            $_SESSION['id'] = $utilizador->getId();
-            $_SESSION['carrinho'] = [];
-            echo json_encode(["message" => "Autenticação bem-sucedida"]);
+
+            //header do token, aqui é definido o algoritimo de encriptação e o tipo
+            $header = [
+                'alg' => 'HS256',
+                'typ' => 'JWT'
+            ];
+
+            //passa o header para objeto json e encriptar para base_64
+            $header = base64_encode(json_encode($header));
+
+            //toda a informação necessaria sobre o cliente fica no payload
+            $payload = [
+                'id_utilizador' => $utilizador->getId(),
+                'perfil' => $utilizador->getPerfil(),
+                'ativo' => $utilizador->getAtivo()
+            ];
+
+            //passa o payload para objeto json e encriptar para base_64
+            $payload = base64_encode(json_encode($payload));
+
+            //chave para encriptar e desincriptar o token
+            $chave = "aSjnJNKu883K092kk)(MKJNjka90#";
+
+            //assinatura para o token
+            $assinatura = hash_hmac('sha256', "$header.$payload", $chave, true);
+
+            //assinatura convertida em base 64
+            $assinatura = base64_encode($assinatura);
+
+            //cria-se o token juntado o header, o payload e a assinatura
+            $token = "$header.$payload.$assinatura";
+
+            echo json_encode(["token" => $token]);
             http_response_code(200);
             exit;
         } else {
