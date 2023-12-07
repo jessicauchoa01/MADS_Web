@@ -2,6 +2,7 @@
 namespace GoEat;
 
 require '../../vendor/autoload.php';
+use \Firebase\JWT\JWT;
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -56,36 +57,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($utilizador->getAtivo() == 1) {
         // Verifica a correspondência da senha
         if (password_verify($data->password, $utilizador->getPassword())) {
-            //header do token, aqui é definido o algoritimo de encriptação e o tipo
-            $header = [
-                'alg' => 'HS256',
-                'typ' => 'JWT'
-            ];
 
-            //passa o header para objeto json e encriptar para base_64
-            $header = base64_encode(json_encode($header));
-
-            //toda a informação necessaria sobre o cliente fica no payload
             $payload = [
-                'id_utilizador' => $utilizador->getId(),
+                'utilizador_id' => $utilizador->getId(),
                 'perfil' => $utilizador->getPerfil(),
                 'ativo' => $utilizador->getAtivo()
             ];
 
-            //passa o payload para objeto json e encriptar para base_64
-            $payload = base64_encode(json_encode($payload));
+            $chave = "segredodogoeat";
 
-            //chave para encriptar e desincriptar o token
-            $chave = "aSjnJNKu883K092kk)(MKJNjka90#";
-
-            //assinatura para o token
-            $assinatura = hash_hmac('sha256', "$header.$payload", $chave, true);
-
-            //assinatura convertida em base 64
-            $assinatura = base64_encode($assinatura);
-
-            //cria-se o token juntado o header, o payload e a assinatura
-            $token = "$header.$payload.$assinatura";
+            $token = JWT::encode($payload, $chave, 'HS256');
 
             echo json_encode(["token" => $token]);
             http_response_code(200);

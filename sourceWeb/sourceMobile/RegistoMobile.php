@@ -1,4 +1,5 @@
 <?php
+
 namespace GoEat;
 
 require '../../vendor/autoload.php';
