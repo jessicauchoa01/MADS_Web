@@ -26,7 +26,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Inicia a sessão
-session_start(); //SERVE PARA ALGO???
+session_start();
 
 // Verifica se o método da solicitação é POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

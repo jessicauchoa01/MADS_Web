@@ -30,8 +30,6 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    $pratos = [];
-
     //VAI BUSCAR TODOS OS RESTAURANTES
     $restaurantes = Restaurante::search([['coluna' => 'estado', 'operador' => '=', 'valor' => 1]]);
 
@@ -52,6 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         }
     }
     header('Content-Type: application/json');
-    echo json_encode($resultado);
+    echo json_encode(array_reverse($resultado));
     http_response_code(200);
 }

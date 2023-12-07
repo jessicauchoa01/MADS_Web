@@ -26,19 +26,13 @@ header("Access-Control-Allow-Methods: POST");
 // Permite cabeçalhos específicos
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// Inicia a sessão
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    $pratos = [];
-
-    //VAI BUSCAR TODOS OS RESTAURANTES
     $restaurantes = Restaurante::search([['coluna' => 'estado', 'operador' => '=', 'valor' => 1]]);
 
-    //OBTÉM O FILTRO ATRAVÉS DO URL
     $tipo_id= $_GET['tipo_id'];
 
-    //VAI BUSCAR A LISTA DE PRATOS PARA OS RESTAURANTES OBTIDOS USANDO O FILTRO
     foreach ($restaurantes as $restaurante) {
         if (isset($tipo_id)) {
             $listaPratos = Prato::search([['coluna' => 'tipo', 'operador' => '=' ,'valor' => $tipo_id],['coluna' => 'restaurante', 'operador' => '=' ,'valor' => $restaurante->getId()]]);
@@ -57,6 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         }
     }
     header('Content-Type: application/json');
-    echo json_encode($resultado);
+    echo json_encode(array_reverse($resultado));
     http_response_code(200);
 }

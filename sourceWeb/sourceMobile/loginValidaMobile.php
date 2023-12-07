@@ -55,9 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Verifica se o utilizador está ativo
     if ($utilizador->getAtivo() == 1) {
         // Verifica a correspondência da senha
-        // Verifica a correspondência da senha
         if (password_verify($data->password, $utilizador->getPassword())) {
-
             //header do token, aqui é definido o algoritimo de encriptação e o tipo
             $header = [
                 'alg' => 'HS256',
