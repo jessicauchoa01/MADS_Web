@@ -26,3 +26,7 @@ e depois:
 
          src/.config
          vendor/
+         
+5. instalar o firebase para poder criar tokens
+       
+       composer require firebase/php-jwt

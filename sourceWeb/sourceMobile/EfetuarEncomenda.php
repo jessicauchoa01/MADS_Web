@@ -45,9 +45,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $utilizador = Utilizador::find($tokenInfo->utilizador_id);
 
     $encomenda = new Encomenda(date("D M d, Y G:i"), $utilizador->getEntidade(), $data->total);
-    //$encomenda->save();
+    $encomenda->save();
 
-    echo json_encode(["message" => "Registo bem-sucedido"]);
+    $lista = $data->lista;
+
+    foreach ($lista as $prato) {
+        $registo = new EncomendaPrato($encomenda->getId(), $prato->id, $prato->quantity, 1);
+        $registo->save();
+    }
+
+    echo json_encode(["message" => "Encomenda efetuada"]);
     http_response_code(200);
     exit;
 } else {

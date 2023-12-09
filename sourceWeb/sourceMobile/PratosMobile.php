@@ -16,24 +16,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
 
-// Habilita o CORS para permitir solicitações entre diferentes domínios
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-
-// Método permitido para a solicitação
 header("Access-Control-Allow-Methods: POST");
-
-// Permite cabeçalhos específicos
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Inicia a sessão
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    //VAI BUSCAR TODOS OS RESTAURANTES
     $restaurantes = Restaurante::search([['coluna' => 'estado', 'operador' => '=', 'valor' => 1]]);
 
-    //VAI BUSCAR A LISTA DE PRATOS PARA OS RESTAURANTES OBTIDOS
     foreach ($restaurantes as $restaurante) {
         $listaPratos = Prato::search([['coluna' => 'restaurante', 'operador' => '=', 'valor' => $restaurante->getId()]]);
         foreach ($listaPratos as $pratos) {
@@ -49,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             ];
         }
     }
+
     header('Content-Type: application/json');
     echo json_encode(array_reverse($resultado));
     http_response_code(200);
