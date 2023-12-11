@@ -18,14 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
 
-// Habilita o CORS para permitir solicitações entre diferentes domínios
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-
-// Método permitido para a solicitação
 header("Access-Control-Allow-Methods: POST");
-
-// Permite cabeçalhos específicos
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 session_start();

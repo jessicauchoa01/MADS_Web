@@ -2,6 +2,9 @@
 
 namespace GoEat;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 require '../../vendor/autoload.php';
 
 header("Access-Control-Allow-Origin: *");
@@ -24,20 +27,27 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    $restaurantes = Restaurante::search([['coluna' => 'estado', 'operador' => '=', 'valor' => 1]]);
 
-    foreach ($restaurantes as $restaurante) {
-        $listaPratos = Prato::search([['coluna' => 'restaurante', 'operador' => '=', 'valor' => $restaurante->getId()]]);
-        foreach ($listaPratos as $pratos) {
+    $token = $_GET['token'];
+
+    $chave = "segredodogoeat";
+
+    $tokenInfo = JWT::decode($token, new Key($chave, 'HS256'));
+
+    $utilizador = Utilizador::find($tokenInfo->utilizador_id);
+
+    $cliente_id = $utilizador->getEntidade();
+
+    $encomendas = Encomenda::search([['coluna' => 'cliente', 'operador' => '=', 'valor' => $cliente_id]]);
+
+    foreach ($encomendas as $encomenda) {
+        $lista = $encomenda->getLista();
+        foreach ($lista as $prato) {
+            $unidade = Prato::find($prato->getPrato());
             $resultado[] = [
-                'id' => $pratos->getId(),
-                'nome' => $pratos->getNome(),
-                'descricao' => $pratos->getDescricao(),
-                'preco' => $pratos->getPreco(),
-                'imagem' => $pratos->getImagem(),
-                'tipo' => $pratos->getTipo(),
-                'disponivel' => $pratos->getDisponivel(),
-                'restaurante' => $pratos->getRestaurante()
+                'nome' => $unidade->getNome(),
+                'quantidade' => $prato->getQuantidade(),
+                'situacao' => $prato->getSituacao(),
             ];
         }
     }
