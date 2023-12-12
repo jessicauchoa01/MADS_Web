@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             'nome' => $prato->getNome(),
             'quantidade' => $lista->getQuantidade(),
             'situacao' => $lista->getSituacao(),
-        ];  
+        ];
     }
 
     header('Content-Type: application/json');
