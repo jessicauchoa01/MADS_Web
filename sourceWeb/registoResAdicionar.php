@@ -4,26 +4,23 @@ namespace GoEat;
 
 require '../vendor/autoload.php';
 
-session_start(); 
+session_start();
 
-use Carbon\Carbon;
-use GoEat\Utilizador;
-use GoEat\Restaurante;
-use GoEat\Morada;
-
- if (empty($_POST['nome']) ||
+ if (
+    empty($_POST['nome']) ||
     empty($_POST['designacao']) ||
     empty($_POST['nif']) ||
     empty($_POST['telemovel']) ||
     empty($_POST['telefone']) ||
     empty($_POST['url']) ||
-    empty($_POST['abertura']) ||
-    empty($_POST['fecho']) ||
+    empty($_FILES['imagem']) ||
     empty($_POST['rua']) ||
     empty($_POST['numPorta']) ||
     empty($_POST['codPostal']) ||
     empty($_POST['localidade']) ||
     empty($_POST['pais']) ||
+    empty($_POST['abertura']) ||
+    empty($_POST['fecho']) ||
     empty($_POST['email']) ||
     empty($_POST['password']) ||
     empty($_POST['confirmacao'])) {
@@ -68,6 +65,12 @@ use GoEat\Morada;
         header('Location: registoResForm.php?erro=' . $mensagem);
         exit;
     }
+
+     if (!empty($_FILES) && $_FILES['imagem']['size'] != 0) {
+         if (file_exists($_FILES['imagem']['tmp_name'])) {
+             copy($_FILES['imagem']['tmp_name'], 'assets/restaurantes/' . $_FILES['imagem']['name']);
+         }
+     }
 }
 
 $moradas = Morada::search([
@@ -90,11 +93,12 @@ $morada->getId(),
 4,
 $_POST['telefone'],
 $_POST['designacao'],
+$_POST['abertura'],
+$_POST['fecho'],
 $_POST['url'],
 $_POST['responsavel'], 
 $_POST['contactoResponsavel'],
-$_POST['abertura'],
-$_POST['fecho'],
+'assets/restaurantes/' . $_FILES['imagem']['name'],
 empty($_POST['segunda']) ? 0 : 1,
 empty($_POST['terca']) ? 0 : 1,
 empty($_POST['quarta']) ? 0 : 1,

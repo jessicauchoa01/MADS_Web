@@ -6,12 +6,13 @@ class Restaurante extends Entidade
 {
     protected string $telefone;
     protected string $designacao;
+    protected string $abertura;
+    protected string $fecho;
     protected string $url;
     protected string $responsavel;
     protected string $contactoResponsavel;
+    protected string $imagem;
 
-    protected string $abertura;
-    protected string $fecho;
     protected int $segunda;
     protected int $terca;
     protected int $quarta;
@@ -33,12 +34,14 @@ class Restaurante extends Entidade
 
         string $telefone= '',
         string $designacao= '',
+        string $abertura= '',
+        string $fecho= '',
         string $url= '',
         string $responsavel= '',
         string $contactoResponsavel= '',
+        string $imagem = '',
 
-        string $abertura= '',
-        string $fecho= '',
+
         int $segunda = 0,
         int $terca = 0,
         int $quarta = 0,
@@ -61,6 +64,7 @@ class Restaurante extends Entidade
         $this->url = $url;
         $this->responsavel = $responsavel;
         $this->contactoResponsavel = $contactoResponsavel;
+        $this->imagem = $imagem;
         $this->tableName = 'restaurantes';
         $this->primaryKey = 'id';
         $this->excludedProperties = [];
@@ -77,6 +81,15 @@ class Restaurante extends Entidade
         $this->numerario = $numerario;
     }
 
+    public function getImagem()
+    {
+        return $this->imagem;
+    }
+
+    public function setImagem($imagem)
+    {
+        $this->imagem = $imagem;
+    }
     
     /**
      * Get the value of telefone
