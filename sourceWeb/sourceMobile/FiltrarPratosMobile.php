@@ -28,22 +28,29 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     $tipo_id= $_GET['tipo_id'];
 
+    $today = date('l');
+
     foreach ($restaurantes as $restaurante) {
-        if (isset($tipo_id)) {
-            $listaPratos = Prato::search([['coluna' => 'tipo', 'operador' => '=' ,'valor' => $tipo_id],['coluna' => 'restaurante', 'operador' => '=' ,'valor' => $restaurante->getId()]]);
-            foreach ($listaPratos as $pratos) {
-                $resultado[] = [
-                    'id' => $pratos->getId(),
-                    'nome' => $pratos->getNome(),
-                    'descricao' => $pratos->getDescricao(),
-                    'preco' => $pratos->getPreco(),
-                    'imagem' => $pratos->getImagem(),
-                    'tipo' => $pratos->getTipo(),
-                    'disponivel' => $pratos->getDisponivel(),
-                    'restaurante' => $pratos->getRestaurante()
-                ];
+        if (!empty($restaurante->getEmenta())) {
+            if ($restaurante->getOpen($today) == 1){
+                if (isset($tipo_id)) {
+                    $listaPratos = Prato::search([['coluna' => 'tipo', 'operador' => '=' ,'valor' => $tipo_id],['coluna' => 'restaurante', 'operador' => '=' ,'valor' => $restaurante->getId()]]);
+                    foreach ($listaPratos as $pratos) {
+                        $resultado[] = [
+                            'id' => $pratos->getId(),
+                            'nome' => $pratos->getNome(),
+                            'descricao' => $pratos->getDescricao(),
+                            'preco' => $pratos->getPreco(),
+                            'imagem' => $pratos->getImagem(),
+                            'tipo' => $pratos->getTipo(),
+                            'disponivel' => $pratos->getDisponivel(),
+                            'restaurante' => $pratos->getRestaurante()
+                        ];
+                    }
+                }
             }
         }
+
     }
 
     header('Content-Type: application/json');

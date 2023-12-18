@@ -26,20 +26,27 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $restaurantes = Restaurante::search([['coluna' => 'estado', 'operador' => '=', 'valor' => 1]]);
 
+    $today = date('l');
+
     foreach ($restaurantes as $restaurante) {
-        $listaPratos = Prato::search([['coluna' => 'restaurante', 'operador' => '=', 'valor' => $restaurante->getId()]]);
-        foreach ($listaPratos as $pratos) {
-            $resultado[] = [
-                'id' => $pratos->getId(),
-                'nome' => $pratos->getNome(),
-                'descricao' => $pratos->getDescricao(),
-                'preco' => $pratos->getPreco(),
-                'imagem' => $pratos->getImagem(),
-                'tipo' => $pratos->getTipo(),
-                'disponivel' => $pratos->getDisponivel(),
-                'restaurante' => $pratos->getRestaurante()
-            ];
+        if (!empty($restaurante->getEmenta())) {
+            if ($restaurante->getOpen($today) == 1){
+                $listaPratos = Prato::search([['coluna' => 'restaurante', 'operador' => '=', 'valor' => $restaurante->getId()]]);
+                foreach ($listaPratos as $pratos) {
+                    $resultado[] = [
+                        'id' => $pratos->getId(),
+                        'nome' => $pratos->getNome(),
+                        'descricao' => $pratos->getDescricao(),
+                        'preco' => $pratos->getPreco(),
+                        'imagem' => $pratos->getImagem(),
+                        'tipo' => $pratos->getTipo(),
+                        'disponivel' => $pratos->getDisponivel(),
+                        'restaurante' => $pratos->getRestaurante()
+                    ];
+                }
+            }
         }
+
     }
 
     header('Content-Type: application/json');

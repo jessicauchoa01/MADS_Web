@@ -24,7 +24,9 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $restaurantes = Restaurante::search([['coluna' => 'estado', 'operador' => '=', 'valor' => 1]]);
+
     $today = date('l');
+
     foreach($restaurantes as $restaurante){
         if (!empty($restaurante->getEmenta())) {
             if ($restaurante->getOpen($today) == 1){
