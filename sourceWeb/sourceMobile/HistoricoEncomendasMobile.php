@@ -43,12 +43,14 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     foreach ($encomendas as $encomenda) {
         $lista = $encomenda->getLista();
         foreach ($lista as $prato) {
-            $unidade = Prato::find($prato->getPrato());
-            $resultado[] = [
-                'nome' => $unidade->getNome(),
-                'quantidade' => $prato->getQuantidade(),
-                'situacao' => $prato->getSituacao(),
-            ];
+            if ($prato->getSituacao() == 'Entregue') {
+                $unidade = Prato::find($prato->getPrato());
+                $resultado[] = [
+                    'nome' => $unidade->getNome(),
+                    'quantidade' => $prato->getQuantidade(),
+                    'situacao' => $prato->getSituacao(),
+                ];
+            }
         }
     }
 

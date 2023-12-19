@@ -2,12 +2,9 @@
 
 namespace GoEat;
 
-session_start();
-
 require '../vendor/autoload.php';
 
-use GoEat\Prato;
-
+session_start();
 
 if (empty($_POST['nome']) || empty($_FILES['imagem']) || empty($_POST['preco']) || empty($_POST['tipo']) || empty($_POST['descricao'])) {
     $mensagem = urlencode('Todos os campos são de preenchimento obrigatório.');

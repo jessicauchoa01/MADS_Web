@@ -40,19 +40,18 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     $encomendas = Encomenda::search([['coluna' => 'cliente', 'operador' => '=', 'valor' => $cliente_id]]);
 
-    $encomenda = $encomendas[count($encomendas) - 1];
-
-    if (!empty($encomenda)) {
-        $listaPratos = $encomenda->getLista();
-    }
-
-    foreach ($listaPratos as $lista) {
-        $prato = Prato::find($lista->getPrato());
-        $resultado[] = [
-            'nome' => $prato->getNome(),
-            'quantidade' => $lista->getQuantidade(),
-            'situacao' => $lista->getSituacao(),
-        ];
+    foreach ($encomendas as $encomenda) {
+        $lista = $encomenda->getLista();
+        foreach ($lista as $prato) {
+            if ($prato->getSituacao() != 'Entregue') {
+                $unidade = Prato::find($prato->getPrato());
+                $resultado[] = [
+                    'nome' => $unidade->getNome(),
+                    'quantidade' => $prato->getQuantidade(),
+                    'situacao' => $prato->getSituacao(),
+                ];
+            }
+        }
     }
 
     header('Content-Type: application/json');

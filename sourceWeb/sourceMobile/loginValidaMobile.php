@@ -42,6 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $utilizador = $resultados[0];
 
+    $cliente = Cliente::find($utilizador->getEntidade());
+
     if ($utilizador->getAtivo() == 1 && $utilizador->getPerfil() == 'Cliente') {
         if (password_verify($data->password, $utilizador->getPassword())) {
             $payload = [
@@ -54,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $token = JWT::encode($payload, $chave, 'HS256');
 
-            echo json_encode(["token" => $token]);
+            echo json_encode(["token" => $token, "imgPerfil" => $cliente->getImgPerfil()]);
             http_response_code(200);
             exit;
         } else {

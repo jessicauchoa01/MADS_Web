@@ -2,15 +2,9 @@
 
 namespace GoEat;
 
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
-
 require '../vendor/autoload.php';
 
-use GoEat\Utilizador;
-
 session_start();
-
 
 if (isset($_SESSION['perfil'])){
     header('Location: index.php');

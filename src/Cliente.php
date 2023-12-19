@@ -4,6 +4,7 @@ namespace GoEat;
 
 class Cliente extends Entidade
 {
+    protected string $imgPerfil;
     protected array $encomendas;
 
     public function __construct(
@@ -12,6 +13,7 @@ class Cliente extends Entidade
         string $telemovel = '',
         int $morada = 0,
         int $estado = 0,
+        string $imgPerfil = '',
         array $encomendas = []
     )
     {
@@ -30,6 +32,7 @@ class Cliente extends Entidade
         $this->primaryKey = 'id';
         $this->excludedProperties = ['encomendas'];
 
+        $this->imgPerfil = $imgPerfil;
         $this->encomendas = $encomendas;
     }
 
@@ -53,4 +56,18 @@ class Cliente extends Entidade
 
         return $this;
     }
+
+    public function getImgPerfil()
+    {
+        return $this->imgPerfil;
+    }
+
+    public function setImgPerfil($imgPerfil)
+    {
+        $this->imgPerfil = $imgPerfil;
+
+        return $this;
+    }
+
+
 }

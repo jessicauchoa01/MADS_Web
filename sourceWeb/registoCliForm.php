@@ -8,7 +8,7 @@
         <?php if(isset($_GET['sucesso'])){ ?>
             <p class='alert alert-success'><?php echo urldecode($_GET['sucesso']); ?> </p>
         <?php } ?>
-	<form method="POST" action="registoCliAdicionar.php">
+	<form method="POST" action="registoCliAdicionar.php" enctype="multipart/form-data">
 		<div class="form-group mb-2">
 			<label for="text">Nome:</label>
 			<input name="nome" type="text" class="form-control">
@@ -59,6 +59,10 @@
 				<input name ="confirmacao" type="password" class="form-control">
 			</div>
 		</div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Escolha uma imagem de perfil</label>
+            <input class="form-control" type="file" name="imgPerfil">
+        </div>
        
 		<button type="submit" class="btn btn-primary mt-2 mb-4">Registar</button>
 	</form>

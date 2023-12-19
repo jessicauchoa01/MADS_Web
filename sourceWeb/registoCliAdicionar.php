@@ -16,7 +16,9 @@ session_start();
     empty($_POST['pais']) ||
     empty($_POST['email']) ||
     empty($_POST['password']) ||
-    empty($_POST['confirmacao'])) {
+    empty($_POST['confirmacao']) ||
+    empty($_FILES['imgPerfil']))
+ {
     $mensagem = urlencode('Todos os campos são de preenchimento obrigatório.');
     header('Location: registoCliForm.php?erro=' . $mensagem);
     exit;
@@ -52,6 +54,12 @@ session_start();
         header('Location: registoCliForm.php?erro=' . $mensagem);
         exit;
     }
+
+     if (!empty($_FILES) && $_FILES['imgPerfil']['size'] != 0) {
+         if (file_exists($_FILES['imgPerfil']['tmp_name'])) {
+             copy($_FILES['imgPerfil']['tmp_name'], 'assets/imagensPerfil/' . $_FILES['imgPerfil']['name']);
+         }
+     }
 }
 
 $moradas = Morada::search([
@@ -66,7 +74,7 @@ if (count($moradas) == 0){
     $morada = $moradas[0];
 }
 
-$cliente = new Cliente($_POST['nome'], $_POST['nif'], $_POST['telemovel'], $morada->getId(), 1);
+$cliente = new Cliente($_POST['nome'], $_POST['nif'], $_POST['telemovel'], $morada->getId(), 1, 'assets/imagensPerfil/' . $_FILES['imgPerfil']['name']);
 $cliente->save();
 
 $utilizador = new Utilizador($_POST['nome'], $_POST['email'], password_hash($_POST['password'], PASSWORD_DEFAULT), 2, 1, $cliente->getId());
