@@ -1,4 +1,5 @@
 <?php
+
 namespace GoEat;
 
 require '../../vendor/autoload.php';
@@ -25,7 +26,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $data = json_decode(file_get_contents("php://input"));
+    $uploadedImg = $_FILES['imgPerfil'];
 
     $chave = "segredodogoeat";
 
@@ -39,7 +40,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $cliente = Cliente::find($utilizador->getEntidade());
 
-    $cliente->update([['coluna' => 'imgPerfil', 'valor' => $data->imgPerfil, 'id' => $cliente->getId()]]);
+    if (!empty($_FILES) && $_FILES['imgPerfil']['size'] != 0) {
+        if (file_exists($_FILES['imgPerfil']['tmp_name'])) {
+            copy($_FILES['imgPerfil']['tmp_name'], '../assets/imagensPerfil/' . $_FILES['imgPerfil']['name']);
+        }
+    }
+
+    $cliente->update(
+        [['coluna' => 'imgPerfil', 'valor' => '"assets/imagensPerfil/' . $_FILES['imgPerfil']['name'] . '"',
+            'id' => $cliente->getId()]]
+    );
 
     echo json_encode(["message" => "Imagem guardada"]);
     http_response_code(200);

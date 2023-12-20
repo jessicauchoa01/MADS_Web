@@ -26,7 +26,6 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
     $data = json_decode(file_get_contents("php://input"));
 
     $chave = "segredodogoeat";

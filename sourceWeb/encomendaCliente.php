@@ -29,7 +29,7 @@ $encomendas = array_reverse(Encomenda::search([['coluna' => 'cliente', 'operador
                     }
 
                 ?>
-                <h2>Última Encomenda:</h2>
+                <h2>Encomenda(s) Ativa(s):</h2>
                 <table class="table table-hover">
                     <thead>
                     <tr>

@@ -16,8 +16,7 @@ session_start();
     empty($_POST['pais']) ||
     empty($_POST['email']) ||
     empty($_POST['password']) ||
-    empty($_POST['confirmacao']) ||
-    empty($_FILES['imgPerfil']))
+    empty($_POST['confirmacao']))
  {
     $mensagem = urlencode('Todos os campos são de preenchimento obrigatório.');
     header('Location: registoCliForm.php?erro=' . $mensagem);
@@ -74,7 +73,14 @@ if (count($moradas) == 0){
     $morada = $moradas[0];
 }
 
-$cliente = new Cliente($_POST['nome'], $_POST['nif'], $_POST['telemovel'], $morada->getId(), 1, 'assets/imagensPerfil/' . $_FILES['imgPerfil']['name']);
+$cliente = new Cliente(
+    $_POST['nome'],
+    $_POST['nif'],
+    $_POST['telemovel'],
+    $morada->getId(),
+    1,
+    $_FILES['imgPerfil']['size'] != 0 ? 'assets/imagensPerfil/' . $_FILES['imgPerfil']['name']
+        : 'assets/imagensPerfil/default.png');
 $cliente->save();
 
 $utilizador = new Utilizador($_POST['nome'], $_POST['email'], password_hash($_POST['password'], PASSWORD_DEFAULT), 2, 1, $cliente->getId());

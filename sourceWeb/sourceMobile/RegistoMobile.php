@@ -58,6 +58,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
+    if (strlen($data->contribuinte) < 9 || strlen($data->contribuinte) > 9 ) {
+        echo json_encode(["message" => "Tem que introduzir um NIF válido."]);
+        http_response_code(401);
+        exit;
+    }
+
     if (strlen($data->telemovel) < 9 || strlen($data->telemovel) > 9) {
         echo json_encode(["message" => "Número de telemóvel inválido."]);
         http_response_code(401);
@@ -88,7 +94,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $morada = $moradas[0];
     }
 
-    $cliente = new Cliente($data->nome, $data->contribuinte, $data->telemovel, $morada->getId(), 1);
+    $cliente = new Cliente(
+        $data->nome,
+        $data->contribuinte,
+        $data->telemovel,
+        $morada->getId(),
+        1,
+        'assets/imagensPerfil/default.png');
     $cliente->save();
 
     $utilizador = new Utilizador($data->nome, $data->email, password_hash($data->password, PASSWORD_DEFAULT), 2, 1, $cliente->getId());
