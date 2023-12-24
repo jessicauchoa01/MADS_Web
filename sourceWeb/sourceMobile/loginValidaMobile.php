@@ -56,7 +56,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $token = JWT::encode($payload, $chave, 'HS256');
 
-            echo json_encode(["token" => $token, "imgPerfil" => $cliente->getImgPerfil()]);
+            echo json_encode([
+                "token" => $token,
+                "imgPerfil" => $cliente->getImgPerfil(),
+                "nomePerfil" => $cliente->getNome()
+            ]);
             http_response_code(200);
             exit;
         } else {
