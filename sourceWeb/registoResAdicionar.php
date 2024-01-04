@@ -29,12 +29,14 @@ session_start();
     exit;
 
 }  else {
-    if (strlen($_POST['telemovel']) < 9 || 
-    strlen($_POST['telemovel']) > 9 || 
-    strlen($_POST['telefone']) < 9 || 
-    strlen($_POST['telefone']) > 9 || 
-    strlen($_POST['contactoResponsavel']) < 9 || 
-    strlen($_POST['contactoResponsavel']) > 9){
+    if (!preg_match('/^\d{9}$/', $_POST['nif'])) {
+        $mensagem = urlencode('Número de NIF inválido.');
+        header('Location: registoResForm.php?erro=' . $mensagem);
+        exit;
+    }
+    if (!preg_match('/^\d{9}$/', $_POST['telemovel']) || 
+    !preg_match('/^\d{9}$/', $_POST['telefone']) ||
+    !preg_match('/^\d{9}$/', $_POST['contactoResponsavel'])){
         $mensagem = urlencode('O telemovel/telefone tem de ter 9 números.');
         header('Location: registoResForm.php?erro=' . $mensagem);
         exit;

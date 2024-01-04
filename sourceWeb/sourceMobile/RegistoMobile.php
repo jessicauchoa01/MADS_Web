@@ -58,13 +58,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    if (strlen($data->contribuinte) < 9 || strlen($data->contribuinte) > 9 ) {
+    if (!preg_match('/^\d{9}$/', $data->contribuinte)) {
         echo json_encode(["message" => "Tem que introduzir um NIF válido."]);
         http_response_code(401);
         exit;
     }
 
-    if (strlen($data->telemovel) < 9 || strlen($data->telemovel) > 9) {
+    if (!preg_match('/^\d{9}$/', $data->telemovel)) {
         echo json_encode(["message" => "Número de telemóvel inválido."]);
         http_response_code(401);
         exit;

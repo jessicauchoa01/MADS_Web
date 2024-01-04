@@ -22,7 +22,12 @@ session_start();
     header('Location: registoCliForm.php?erro=' . $mensagem);
     exit;
 }  else {
-    if (strlen($_POST['telemovel']) < 9 || strlen($_POST['telemovel']) > 9) {
+    if (!preg_match('/^\d{9}$/', $_POST['nif'])) {
+        $mensagem = urlencode('Número de NIF inválido.');
+        header('Location: registoCliForm.php?erro=' . $mensagem);
+        exit;
+    }
+    if (!preg_match('/^\d{9}$/', $_POST['telemovel'])) {
         $mensagem = urlencode('Número de telemóvel inválido.');
         header('Location: registoCliForm.php?erro=' . $mensagem);
         exit;
